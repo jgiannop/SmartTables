@@ -6,7 +6,8 @@ This is a jquery plugin....
 
 # example
 
- var cols = [{
+ var cols = \[
+            {
                 "data": "owner_id",
                 "name": "",
                 "searchable": "true",
