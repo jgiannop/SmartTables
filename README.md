@@ -21,7 +21,7 @@ This is a jquery plugin that renders data in tables or lists....
 ## example
 ### onclient
 ```html
-<div class="smarttable"> </div>  
+<div class="smarttable"></div>  
 ```
 
 ```javascript
