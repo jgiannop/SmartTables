@@ -21,8 +21,7 @@ This is a jquery plugin that renders data in tables or lists....
 ## example
 ### onclient
 ```javascript
- var cols = [
-            {
+ var cols = [{
                 "data": "owner_id",
                 "name": "",
                 "searchable": "true",
