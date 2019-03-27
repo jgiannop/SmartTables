@@ -12,6 +12,7 @@ This is a jquery plugin....
 
 
 ## example
+### onclient
 ```javascript
  var cols = [
             {
@@ -80,6 +81,56 @@ This is a jquery plugin....
                 "regex": "false"
             }
         });
+```
+### On Server
+```php
+public function GetAllBoatsSS($requestData) {
+        $columns = array(
+            // datatable column index  => database column name
 
+            0 => 'owner_id',
+            1 => 'photopath',
+            2 => 'boatname',
+        );
+  
+        $st = $this->db->prepare("SELECT * FROM boats");
+        $st->execute();
+        $totalData = $st->rowCount();
+        $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
+        if (!empty($requestData['search']['value'])) {
+            // if there is a search parameter
+            $sql = "SELECT  * FROM boats";
+            $sql.=" where (boatname LIKE '%" . $requestData['search']['value'] . "%' ";    // $requestData['search']['value'] contains search parameter
+            $sql.=" OR owner_id LIKE '%" . $requestData['search']['value'] . "%') ";
+            $sql.=" ORDER BY " . $columns[$requestData['order'][0]['column']] . "   " . $requestData['order'][0]['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
+            $st = $this->db->prepare($sql);
+            $st->execute();
+            $totalFiltered = $st->rowCount();
+        } else {
+            $sql = "SELECT  * FROM boats";
+            $sql.=" ORDER BY " . $columns[$requestData['order'][0]['column']] . "   " . $requestData['order'][0]['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
+            $st = $this->db->prepare($sql);
+            $st->execute();
+        }
 
+        $data = array();
+        while ($row = $st->fetch(PDO::FETCH_ASSOC)) {
+            $nestedData = array();
+            $nestedData["boatname"] = $row["boatname"];
+            $nestedData["overview"] = $row["overview"];
+            $nestedData["owner_id"] = $row["owner_id"];
+            $nestedData["photopath"] = '<div class="imgzoom"><img style="height:50px;width:50px; border:1px solid #FF851B;" src="http://clicknroll.com/images/boats/' . $row['photopath'] . '" alt="Item picture" border="0"></div>';
+
+            $nestedData["actions"] = "<div class='btn-group actionmenubtn' data-button='" . json_encode($nestedData) . "'><i class='fa  fa-pencil-square-o action_icon' id='action_icon_" . $row["id"] . "' style='cursor:pointer; font-size:18px !important'></i></div>";
+
+            $data[] = $nestedData;
+        }
+        $json_data = array(
+            "draw" => intval($requestData['draw']), // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw. 
+            "recordsTotal" => intval($totalData), // total number of records
+            "recordsFiltered" => intval($totalFiltered), // total number of records after searching, if there is no searching then totalFiltered = totalData
+            "data" => $data   // total data array
+        );
+        return $json_data;
+    }
 ```
