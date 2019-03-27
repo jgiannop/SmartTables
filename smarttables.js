@@ -2,24 +2,28 @@ jQuery.fn.extend({
     SmartTable: function(obj) {
 
         var updatedrawCallback = function(container, obj) {
-            $(".lengthinput").off('change').on('change', function() {
+            var linput=container.find(".headarea > .lengthinputcont > .lengthinput");
+            var oinput=container.find(".headarea > .orderinputcont > .orderinput");
+            var otinput=container.find(".headarea > .ordertypeinputcont > .ordertypeinput");
+            var pagin=container.find(".pagination");
+            linput.off('change').on('change', function() {
                 container.find("ul.table").empty();
-                $(".pagination").empty();
+                pagin.empty();
                 var newobj = obj;
-                newobj.length = $(".lengthinput").val();
+                newobj.length = linput.val();
                 newobj.draw = 1;
                 newobj.start = 0;
-                updatedraw(newobj, container)
+                updatedraw(newobj, container);
 
             });
 
-            $(".orderinput").off('change').on('change', function() {
+            oinput.off('change').on('change', function() {
                 container.find("ul.table").empty();
                 var colid = $(this).val();
                 console.log(colid);
-                $(".pagination").empty();
+                pagin.empty();
                 var newobj = obj;
-                newobj.length = $(".lengthinput").val();
+                newobj.length = linput.val();
                 newobj.draw = 1;
                 newobj.start = 0;
                 newobj.order[0].column = colid;
@@ -28,11 +32,12 @@ jQuery.fn.extend({
 
             });
 
-            $(".ordertypeinput").off('change').on('change', function() {
+            otinput.off('change').on('change', function() {
                 container.find("ul.table").empty();
-                $(".pagination").empty();
+//                container.find("table").find("tbody").empty();
+                pagin.empty();
                 var newobj = obj;
-                newobj.length = parseInt($(".lengthinput").val());
+                newobj.length = parseInt(linput.val());
                 newobj.draw = 1;
                 newobj.start = 0;
                 newobj.order[0].dir = $(this).val();
@@ -44,9 +49,9 @@ jQuery.fn.extend({
             $(".viewtypeinput").off('change').on('change', function() {
                 container.find("ul.table").empty();
                 container.find("table").find("tbody").empty();
-                $(".pagination").empty();
+                pagin.empty();
                 var newobj = obj;
-                newobj.length = parseInt($(".lengthinput").val());
+                newobj.length = parseInt(linput.val());
                 newobj.draw = 1;
                 newobj.start = 0;
                 newobj.dataview = $(this).val();
@@ -59,16 +64,14 @@ jQuery.fn.extend({
 
             $(".searchtable").off("keyup").on("keyup", function(e) {
                 if (e.keyCode == 13) {
-                    var currentdraw = parseInt($(".page-item.active > a").html());
                     container.find("ul.table").empty();
-                    container.find("tbody").empty();
-                    $(".pagination").empty();
+                    pagin.empty();
                     var newobj = obj;
-                    newobj.length = parseInt($(".lengthinput").val());
+                    newobj.length = parseInt(linput.val());
                     newobj.draw = 1;
                     newobj.start = 0;
                     newobj.search.value = $(this).val();
-                    updatedraw(newobj, container)
+                    updatedraw(newobj, container);
                 }
             });
         };
