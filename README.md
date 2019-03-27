@@ -5,8 +5,8 @@ This is a jquery plugin....
 # Documentation
 
 # example
-
- var cols = \[
+```javascript
+ var cols = [
             {
                 "data": "owner_id",
                 "name": "",
@@ -58,7 +58,7 @@ This is a jquery plugin....
             "start": 0,
             "dataview": "table",
             "ajax": {
-                "url": _URL + "/boats/GetAllBoatsSS",
+                "url": _URL + "/boats/GetBoats",
                 "method": "post"
             },
             "lengthinput": ['2', '3', '4', '5', '8'],
@@ -75,4 +75,4 @@ This is a jquery plugin....
         });
 
 
-
+```
