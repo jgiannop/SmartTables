@@ -1,9 +1,16 @@
 # smarttables
+This is a jquery plugin that renders data in tables or lists....
 
-This is a jquery plugin....
+
+# Usage
+## via cdn
+```html
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/jgiannop/smarttables/smarttables.css">
+<script src="https://cdn.jsdelivr.net/gh/jgiannop/public/js/smarttables.js" type="text/javascript"></script>  
+
+```
 
 # Documentation
-
 ## Parameters
 
 * draw: The draw of the table....Draw is an integer
