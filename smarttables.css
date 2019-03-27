@@ -1,0 +1,89 @@
+
+.smarttable {
+    width: 100%;
+}
+
+.headarea {
+    height: 80px;
+    background-color: #ddd;
+    padding: 20px;
+}
+
+.smarttable>table {
+    background-color: white;
+    margin-bottom: 0px !important;
+}
+
+.smarttable>.headarea>.lengthinputcont {
+    width: 100px;
+    float: left;
+    height: 40px;
+}
+
+.smarttable>.headarea>.orderinputcont {
+    width: 100px;
+    height: 40px;
+    float: left;
+    margin-left: 20px;
+}
+
+.smarttable>.headarea>.ordertypeinputcont {
+    width: 100px;
+    height: 40px;
+    float: left;
+    margin-left: 20px;
+}
+
+.smarttable>.headarea>.viewtypecont {
+    width: 100px;
+    height: 40px;
+    float: left;
+    margin-left: 20px;
+}
+
+.smarttable>.headarea>.searchtablecont {
+    width: 300px;
+    height: 40px;
+    float: right;
+}
+
+.smarttable>.tablefooterarea>nav>ul.pagination {
+    float: right;
+    margin: 20px;
+}
+
+.ordered {
+    background-color: bisque;
+}
+
+ul.table {
+    width: 100%;
+    list-style-type: none;
+    /* display: flex;
+    flex-wrap: wrap; */
+}
+
+.tablefooterarea {
+    background-color: #ddd;
+    height: 60px;
+}
+
+ul.table>li {
+    width: 300px;
+    margin-top: 40px;
+    background-color: white;
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+}
+
+.imgzoom:hover {
+    transform: translate(50px, 50px) scale(3);
+}
+
+.imgzoom {
+    width: auto;
+    height: auto;
+    transition: transform .2s;
+    text-align: center;
+}
