@@ -262,6 +262,8 @@ jQuery.fn.extend({
 
         return this.each(function() {
             var container = $(this);
+            obj.draw=1;
+            obj.start=0;
             createmainui(container, obj);
             updatedraw(obj, container, updatedrawCallback(container, obj));
         });
