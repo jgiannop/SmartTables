@@ -26,44 +26,28 @@ This is a jquery plugin that renders data in tables or lists....
                 "name": "",
                 "searchable": "true",
                 "orderable": "true",
-                "width": "15%",
-                "search": {
-                    "value": "",
-                    "regex": "false"
-                }
+                "width": "15%"
             },
             {
                 "data": "photopath",
                 "name": "",
                 "searchable": "true",
                 "orderable": "false",
-                "width": "15%",
-                "search": {
-                    "value": "",
-                    "regex": "false"
-                }
+                "width": "15%"
             },
             {
                 "data": "boatname",
                 "name": "",
                 "searchable": "true",
                 "orderable": "true",
-                "width": "60%",
-                "search": {
-                    "value": "",
-                    "regex": "false"
-                }
+                "width": "60%"
             },
             {
                 "data": "actions",
                 "name": "",
                 "searchable": "true",
                 "orderable": "false",
-                "width": "10%",
-                "search": {
-                    "value": "",
-                    "regex": "false"
-                }
+                "width": "10%"
             }
         ];
 
