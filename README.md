@@ -84,7 +84,8 @@ This is a jquery plugin....
 ```
 ### On Server
 ```php
-public function GetAllBoatsSS($requestData) {
+public function GetBoats() {
+        $requestData=$_REQUEST;
         $columns = array(
             // datatable column index  => database column name
 
