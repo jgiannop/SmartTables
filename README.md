@@ -6,9 +6,9 @@ This is a jquery plugin....
 
 ## Parameters
 
-draw: The draw of the table....Draw is an integer
-dataview: values are table,grid
-
+-draw: The draw of the table....Draw is an integer
+-dataview: values are table,grid
+-lengthinput: an array of integer values that indicate the number of results for each draw
 
 
 ## example
