@@ -1,4 +1,4 @@
-# smarttables
+# SmartTables
 This is a jquery plugin that renders data in tables or lists....
 
 
