@@ -2,9 +2,9 @@
 
 This is a jquery plugin....
 
-# Documentation
+## Documentation
 
-# example
+## example
 ```javascript
  var cols = [
             {
