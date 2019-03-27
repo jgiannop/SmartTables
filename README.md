@@ -56,8 +56,6 @@ This is a jquery plugin that renders data in tables or lists....
         ];
 
         $(".smarttable").SmartTable({
-            "draw": 1,
-            "start": 0,
             "dataview": "table",
             "ajax": {
                 "url": _URL + "/boats/GetBoats",
