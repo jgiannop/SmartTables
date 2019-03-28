@@ -19,7 +19,7 @@ This is a jquery plugin that renders data in tables or lists....
 
 
 ## example
-### onclient
+### On Client
 ```html
 <div class="smarttable"></div>  
 ```
