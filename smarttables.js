@@ -19,7 +19,6 @@ SMTable = jQuery.fn.extend({
             var pagin = container.find(".pagination");
             
             linput.off('change').on('change', function() {
-                //container.find("ul.table").empty();
                 pagin.empty();
                 var newobj = obj;
                 newobj.length = linput.val();
@@ -28,7 +27,6 @@ SMTable = jQuery.fn.extend({
                 updatedraw(newobj, container);
             });
             oinput.off('change').on('change', function() {
-               //container.find("ul.table").empty();
                 var colid = $(this).val();
                 pagin.empty();
                 var newobj = obj;
@@ -40,7 +38,6 @@ SMTable = jQuery.fn.extend({
                 updatedraw(newobj, container);
             });
             otinput.off('change').on('change', function() {
-                //container.find("ul.table").empty();
                 pagin.empty();
                 var newobj = obj;
                 newobj.length = parseInt(linput.val());
@@ -50,7 +47,6 @@ SMTable = jQuery.fn.extend({
                 updatedraw(newobj, container);
             });
             vtinput.off('change').on('change', function() {
-                //container.find("ul.table").empty();
                 container.find("table").find("tbody").empty();
                 pagin.empty();
                 var newobj = obj;
@@ -74,7 +70,6 @@ SMTable = jQuery.fn.extend({
                 }
                 to = setTimeout(function () {
                     pagin.empty();
-                    //container.find("ul.table").empty();     
                     updatedraw(newobj, container);
                 }, 1000);
             });
@@ -113,7 +108,6 @@ SMTable = jQuery.fn.extend({
                             tbody += "</tr>";
                         });
                         tbody += "</tbody>";
-                        //  container.find("table").find("tbody").empty();
                         var tbodyexist = container.find("table").find("tbody").length > 0;
                         if (tbodyexist) {
                             container.find("table").find("tbody").replaceWith(tbody);
@@ -158,7 +152,7 @@ SMTable = jQuery.fn.extend({
         }
 
         function createmainui(container, obj) {
-            console.log(obj);
+            container.addClass("smarttable");
             var lengthinput = obj["lengthinput"];
             var length = obj["length"];
             var dataview = obj["dataview"];
