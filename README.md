@@ -112,7 +112,7 @@ public function GetBoats() {
             $nestedData["boatname"] = $row["boatname"];
             $nestedData["overview"] = $row["overview"];
             $nestedData["owner_id"] = $row["owner_id"];
-            $nestedData["photopath"] = '<div class="imgzoom"><img style="height:50px;width:50px; border:1px solid #FF851B;" src="http://clicknroll.com/images/boats/' . $row['photopath'] . '" alt="Item picture" border="0"></div>';
+            $nestedData["photopath"] = '<div class="imgzoom"><img style="height:50px;width:50px; border:1px solid #FF851B;" src="images/boats/' . $row['photopath'] . '" alt="Item picture" border="0"></div>';
 
             $nestedData["actions"] = "<div class='btn-group actionmenubtn' data-button='" . json_encode($nestedData) . "'><i class='fa  fa-pencil-square-o action_icon' id='action_icon_" . $row["id"] . "' style='cursor:pointer; font-size:18px !important'></i></div>";
 
