@@ -13,10 +13,11 @@ This is a jquery plugin that renders data in tables or lists....
 # Documentation
 ## Parameters
 
-* draw: The draw of the table....Draw is an integer
-* dataview: values are table,grid
-* lengthinput: an array of integer values that indicate the number of results for each draw
-
+* draw: The draw of the table....Draw is an integer.
+* dataview: An enum with 2 values... table,grid.
+* lengthinput: An array of integer values that indicate the number of results for each draw.
+* order: A json object that indicates the order in respect to column number and the direction of the order.
+* columns: A json array that defines the column objects that beeing rendered.
 
 ## Example
 ### On Client
