@@ -84,18 +84,30 @@ public function GetBoats() {
         $st->execute();
         $totalData = $st->rowCount();
         $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
+         $len=$requestData['length']=="All"?"":" LIMIT " . $requestData['start'] . " ," . $requestData['length'];
+
         if (!empty($requestData['search']['value'])) {
             // if there is a search parameter
             $sql = "SELECT  * FROM boats";
             $sql.=" where (boatname LIKE '%" . $requestData['search']['value'] . "%' ";    // $requestData['search']['value'] contains search parameter
             $sql.=" OR owner_id LIKE '%" . $requestData['search']['value'] . "%') ";
-            $sql.=" ORDER BY " . $columns[$requestData['order']['column']] . "   " . $requestData['order']['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
+            $sql.=" ORDER BY " . $columns[$requestData['order']['column']] . "   " . $requestData['order']['dir'] . $len . "   ";
             $st = $this->db->prepare($sql);
             $st->execute();
-            $totalFiltered = $st->rowCount();
+
+            $sql2 = "SELECT count(*) as total from boats";
+            $sql2.=" where (boatname LIKE '%" . $requestData['search']['value'] . "%' ";    // $requestData['search']['value'] contains search parameter
+            $sql2.=" OR owner_id LIKE '%" . $requestData['search']['value'] . "%') ";
+            $sql2.=" ORDER BY " . $columns[$requestData['order']['column']];
+            $st2= $this->db->prepare($sql2);
+            $st2->execute();
+            $row2 = $st2->fetch(PDO::FETCH_ASSOC);
+            $totalFiltered = $row2["total"];
+
+            
         } else {
             $sql = "SELECT  * FROM boats";
-            $sql.=" ORDER BY " . $columns[$requestData['order']['column']] . "   " . $requestData['order']['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
+            $sql.=" ORDER BY " . $columns[$requestData['order']['column']] . "   " . $requestData['order']['dir'] . $len . "   ";
             $st = $this->db->prepare($sql);
             $st->execute();
         }
@@ -106,10 +118,8 @@ public function GetBoats() {
             $nestedData["boatname"] = $row["boatname"];
             $nestedData["overview"] = $row["overview"];
             $nestedData["owner_id"] = $row["owner_id"];
-            $nestedData["photopath"] = '<div class="imgzoom"><img style="height:50px;width:50px; border:1px solid #FF851B;" src="images/boats/' . $row['photopath'] . '" alt="Item picture" border="0"></div>';
-
+            $nestedData["photopath"] = '<div class="imgzoom"><img style="height:50px;width:50px; border:1px solid #FF851B;" src="http://116.203.118.184/clicknroll/clicknrollclient/public/images/boats/' . $row['photopath'] . '" alt="Item picture" border="0"></div>';
             $nestedData["actions"] = "<div class='btn-group actionmenubtn' data-button='" . json_encode($nestedData) . "'><i class='fa  fa-pencil-square-o action_icon' id='action_icon_" . $row["id"] . "' style='cursor:pointer; font-size:18px !important'></i></div>";
-
             $data[] = $nestedData;
         }
         $json_data = array(
