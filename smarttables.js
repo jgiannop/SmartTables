@@ -87,7 +87,7 @@ SMTable = jQuery.fn.extend({
                     var jsondata = JSON.parse(data);
                     var total = jsondata.recordsFiltered;
                     var dataview = obj["dataview"];
-                    var length = parseInt($(".lengthinput").val());
+                    var length = parseInt(container.find(".headarea > .lengthinputcont > .lengthinput").val());
                     var pagescount = 0;
                     if (total % length == 0) {
                         pagescount = parseInt(total / length);
@@ -199,7 +199,7 @@ SMTable = jQuery.fn.extend({
             }
             txt += '<div class="tablefooterarea"><nav aria-label="Page navigation example"><ul class="pagination"></ul></nav></div>';
             container.append(txt);
-            $(".lengthinput").val(length);
+            container.find(".headarea > .lengthinputcont > .lengthinput").val(length);
             $(".viewtypeinput").val(obj["dataview"]);
             if (dataview == "table") {
                 createthead(container, obj);
@@ -238,11 +238,10 @@ SMTable = jQuery.fn.extend({
             } else {
                 container.find(".pagination").append('<li class="page-item next"><a class="page-link next" href="#">Next</a></li>');
             }
-            $(".page-link").off('click').on('click', function() {
-                var currentdraw = parseInt($(".page-item.active > a").html());
+            container.find(".pagination").find(".page-item").find(".page-link").off('click').on('click', function() {
+                var currentdraw = parseInt( container.find(".pagination").find(".page-item").find(".page-item.active > a").html());
                 var newdraw = parseInt($(this).html());
                 if (currentdraw != newdraw) {
-                    //container.find("ul.table").empty();
                     container.find(".pagination").empty();
                     if ($(this).hasClass("prev")) {
                         var draw = currentdraw - 1;
@@ -252,11 +251,11 @@ SMTable = jQuery.fn.extend({
                     } else {
                         var draw = $(this).html();
                     }
-                    var start = (draw - 1) * $(".lengthinput").val();
+                    var start = (draw - 1) * container.find(".headarea > .lengthinputcont > .lengthinput").val();
                     var newobj = obj;
                     newobj.draw = draw;
                     newobj.start = start;
-                    newobj.length = $(".lengthinput").val();
+                    newobj.length = container.find(".headarea > .lengthinputcont > .lengthinput").val();
                     updatedraw(newobj, container);
                 }
             });
