@@ -9,7 +9,7 @@ SMTable = jQuery.fn.extend({
                 $(this).empty();
             }
         });
-
+        
         var updatedrawCallback = function(container, obj) {
             var linput = container.find(".headarea > .lengthinputcont > .lengthinput");
             var oinput = container.find(".headarea > .orderinputcont > .orderinput");
@@ -19,7 +19,7 @@ SMTable = jQuery.fn.extend({
             var pagin = container.find(".pagination");
             
             linput.off('change').on('change', function() {
-                container.find("ul.table").empty();
+                //container.find("ul.table").empty();
                 pagin.empty();
                 var newobj = obj;
                 newobj.length = linput.val();
@@ -28,7 +28,7 @@ SMTable = jQuery.fn.extend({
                 updatedraw(newobj, container);
             });
             oinput.off('change').on('change', function() {
-                container.find("ul.table").empty();
+               //container.find("ul.table").empty();
                 var colid = $(this).val();
                 pagin.empty();
                 var newobj = obj;
@@ -40,7 +40,7 @@ SMTable = jQuery.fn.extend({
                 updatedraw(newobj, container);
             });
             otinput.off('change').on('change', function() {
-                container.find("ul.table").empty();
+                //container.find("ul.table").empty();
                 pagin.empty();
                 var newobj = obj;
                 newobj.length = parseInt(linput.val());
@@ -50,7 +50,7 @@ SMTable = jQuery.fn.extend({
                 updatedraw(newobj, container);
             });
             vtinput.off('change').on('change', function() {
-                container.find("ul.table").empty();
+                //container.find("ul.table").empty();
                 container.find("table").find("tbody").empty();
                 pagin.empty();
                 var newobj = obj;
@@ -62,10 +62,6 @@ SMTable = jQuery.fn.extend({
                 createmainui(container, obj);
                 updatedraw(obj, container, updatedrawCallback(container, obj));
             });
-
-
-
-
             var to = true;
             stinput.off("input").on("input", function(e) {  
                 var newobj = obj;
@@ -78,14 +74,14 @@ SMTable = jQuery.fn.extend({
                 }
                 to = setTimeout(function () {
                     pagin.empty();
-                    container.find("ul.table").empty();     
+                    //container.find("ul.table").empty();     
                     updatedraw(newobj, container);
                 }, 1000);
             });
         };
 
         function updatedraw(obj, container, callback) {
-            cols = obj["columns"];
+            var cols = obj["columns"];
             var url = obj["ajax"]["url"];
             var method = obj["ajax"]["method"];
             $.ajax({
@@ -109,7 +105,10 @@ SMTable = jQuery.fn.extend({
                         $.each(arraydata, function(k, v) {
                             tbody += "<tr>";
                             $.each(cols, function(k1, v1) {
-                                tbody += "<td>" + v[v1.data] + "</td>";
+                                if(!obj.hiddenOnTable)
+                                {
+                                    tbody += "<td>" + v[v1.data] + "</td>";
+                                }
                             });
                             tbody += "</tr>";
                         });
@@ -128,18 +127,34 @@ SMTable = jQuery.fn.extend({
                         $.each(arraydata, function(k, v) {
                             tbody += "<li>";
                             $.each(cols, function(k1, v1) {
-                                tbody += "<div>" + v1.name + ": " + v[v1.data] + "</div>";
+                                if(!v1.hiddenOnGrid)
+                                {
+                                    if(obj.ongridview.removeheaders)
+                                    {
+                                        tbody += "<div>" + v[v1.data] + "</div>";
+                                    }
+                                    else
+                                    {
+                                        tbody += "<div>" + v1.name + ": " + v[v1.data] + "</div>";
+                                    } 
+                                }                               
                             });
                             tbody += "</li>";
                         });
-                        container.find("ul.table").append(tbody);
+                        //container.find("ul.table").append(tbody);
+                        var tbodyexist =container.find(".gridcontainer").find("ul.table").children().length > 0;
+                        if (tbodyexist) {
+                            var clsname = container.attr("class") + "_smtable";
+                            var txt = '<div class="gridcontainer"><ul class="table '+clsname+'" type="text">'+tbody+'</ul></div>';
+                            container.find(".gridcontainer").replaceWith(txt);
+                        } else {
+                            container.find("ul.table").append(tbody);
+                        }
                     }
                     createpaginator(obj["draw"], pagescount, container);
                     callback;
-
                 }
             });
-
         }
 
         function createmainui(container, obj) {
@@ -148,42 +163,46 @@ SMTable = jQuery.fn.extend({
             var length = obj["length"];
             var dataview = obj["dataview"];
             var cols = obj["columns"];
-            var txt = '<div class="headarea"><label class="lengthinputcont">Length: <select class="form-control lengthinput" type="text">';
-            $.each(lengthinput, function(k, v) {
-                txt += '<option value="' + v + '">' + v + '</option>';
-            });
-            txt += '</select></label>';
+            var txt = '<div class="headarea">';
+            if(obj.actions.length){
+                txt += '<label class="lengthinputcont">Length: <select class="form-control lengthinput" type="text">';
+                $.each(lengthinput, function(k, v) {
+                    txt += '<option value="' + v + '">' + v + '</option>';
+                });
+                txt += '</select></label>';
+            }
+            if(obj.actions.order){
+                txt += '<label class="orderinputcont">Order by: <select class="form-control orderinput" type="text">';
+                $.each(cols, function(k, v) {
+                    if (v.orderable == "true") {
+                        txt += '<option value="' + k + '">' + v.data + '</option>';
+                    }
+                });
+                txt += '</select></label>';
 
-
-            txt += '<label class="orderinputcont">Order by: <select class="form-control orderinput" type="text">';
-            $.each(cols, function(k, v) {
-                if (v.orderable == "true") {
-                    txt += '<option value="' + k + '">' + v.data + '</option>';
-                }
-            });
-            txt += '</select></label>';
-
-            txt += '<label class="ordertypeinputcont">Order dir: <select class="form-control ordertypeinput" type="text">';
-            txt += '<option value="asc">asc</option>';
-            txt += '<option value="desc">desc</option>';
-            txt += '</select></label>';
-
-            txt += '<label class="viewtypecont">View: <select class="form-control viewtypeinput" type="text">';
-            txt += '<option value="table">table</option>';
-            txt += '<option value="grid">grid</option>';
-            txt += '</select></label>';
-
-            txt += '<label class="searchtablecont"><input class="form-control searchtable" placeholder="Search"  type="text"></label></div>';
-
+                txt += '<label class="ordertypeinputcont">Order dir: <select class="form-control ordertypeinput" type="text">';
+                txt += '<option value="asc">asc</option>';
+                txt += '<option value="desc">desc</option>';
+                txt += '</select></label>';
+            }
+            if(obj.actions.view){
+                txt += '<label class="viewtypecont">View: <select class="form-control viewtypeinput" type="text">';
+                txt += '<option value="table">table</option>';
+                txt += '<option value="grid">grid</option>';
+                txt += '</select></label>';
+            }
+            if(obj.actions.search){
+                txt += '<label class="searchtablecont"><input class="form-control searchtable" placeholder="Search"  type="text"></label>';
+            }
+            txt += '</div>';
             var clsname = container.attr("class") + "_smtable";
             if (dataview == "table") {
                 txt += '<table class="table ' + clsname + ' table-bordered" type="text"></table>';
 
             } else if (dataview == "grid") {
-                txt += '<ul class="table ' + clsname + '" type="text"></ul>';
+                txt += '<div class="gridcontainer"><ul class="table ' + clsname + '" type="text"></ul></div>';
 
             }
-
             txt += '<div class="tablefooterarea"><nav aria-label="Page navigation example"><ul class="pagination"></ul></nav></div>';
             container.append(txt);
             $(".lengthinput").val(length);
@@ -191,9 +210,7 @@ SMTable = jQuery.fn.extend({
             if (dataview == "table") {
                 createthead(container, obj);
             }
-
         }
-
         function createthead(container, obj) {
             cols = obj["columns"];
             ordercol = obj["order"]["column"];
@@ -209,9 +226,7 @@ SMTable = jQuery.fn.extend({
                 container.find("table").append(thead);
             }
         }
-
         function createpaginator(draw, pagescount, container) {
-
             if (draw == 1) {
                 container.find(".pagination").append('<li class="page-item prev disabled"><a class="page-link prev" href="#">Previous</a></li>');
             } else {
@@ -223,7 +238,6 @@ SMTable = jQuery.fn.extend({
                 } else {
                     container.find(".pagination").append('<li class="page-item"><a class="page-link" href="#">' + (i + 1) + '</a></li>');
                 }
-
             }
             if (draw == pagescount) {
                 container.find(".pagination").append('<li class="page-item next disabled"><a class="page-link next" href="#">Next</a></li>');
@@ -234,9 +248,8 @@ SMTable = jQuery.fn.extend({
                 var currentdraw = parseInt($(".page-item.active > a").html());
                 var newdraw = parseInt($(this).html());
                 if (currentdraw != newdraw) {
-                    container.find("ul.table").empty();
+                    //container.find("ul.table").empty();
                     container.find(".pagination").empty();
-
                     if ($(this).hasClass("prev")) {
                         var draw = currentdraw - 1;
                     } else if ($(this).hasClass("next")) {
@@ -254,7 +267,6 @@ SMTable = jQuery.fn.extend({
                 }
             });
         }
-
         return this.each(function() {
             var container = $(this);
             obj.draw = 1;
