@@ -18,7 +18,7 @@ This is a jquery plugin that renders data in tables or lists....
 * lengthinput: an array of integer values that indicate the number of results for each draw
 
 
-## example
+## Example
 ### On Client
 ```html
 <div class="smarttable"></div>  
@@ -68,7 +68,7 @@ $(".smarttable").SmartTable({
     }];
 });
 ```
-### On Server
+### On Server (with php)
 ```php
 public function GetBoats() {
         $requestData=$_REQUEST;
