@@ -1,4 +1,4 @@
-jQuery.fn.extend({
+SMTable = jQuery.fn.extend({
     SmartTable: function(obj) {
 
         $.extend(SMTable, {
