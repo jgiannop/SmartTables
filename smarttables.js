@@ -247,6 +247,9 @@ jQuery.fn.extend({
             var container = $(this);
             obj.draw = 1;
             obj.start = 0;
+            obj.search = {};
+            obj.search.value = "";
+            obj.search.regex = "false";
             createmainui(container, obj);
             updatedraw(obj, container, updatedrawCallback(container, obj));
         });
