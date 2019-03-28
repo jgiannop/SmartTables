@@ -3,7 +3,7 @@ SMTable = jQuery.fn.extend({
 
         $.extend(SMTable, {
             redraw: function() {
-                updatedraw(obj, $(this))
+                updatedraw(obj, $(this));
             },
             destroy: function() {
                 $(this).empty();
@@ -14,7 +14,10 @@ SMTable = jQuery.fn.extend({
             var linput = container.find(".headarea > .lengthinputcont > .lengthinput");
             var oinput = container.find(".headarea > .orderinputcont > .orderinput");
             var otinput = container.find(".headarea > .ordertypeinputcont > .ordertypeinput");
+            var vtinput = container.find(".headarea > .viewtypecont > .viewtype");
+            var stinput = container.find(".headarea > .searchtablecont > .searchtable");
             var pagin = container.find(".pagination");
+            
             linput.off('change').on('change', function() {
                 container.find("ul.table").empty();
                 pagin.empty();
@@ -23,13 +26,10 @@ SMTable = jQuery.fn.extend({
                 newobj.draw = 1;
                 newobj.start = 0;
                 updatedraw(newobj, container);
-
             });
-
             oinput.off('change').on('change', function() {
                 container.find("ul.table").empty();
                 var colid = $(this).val();
-                console.log(colid);
                 pagin.empty();
                 var newobj = obj;
                 newobj.length = linput.val();
@@ -38,24 +38,18 @@ SMTable = jQuery.fn.extend({
                 newobj.order.column = colid;
                 newobj.order.dir = otinput.val();
                 updatedraw(newobj, container);
-
             });
-
             otinput.off('change').on('change', function() {
                 container.find("ul.table").empty();
-                //                container.find("table").find("tbody").empty();
                 pagin.empty();
                 var newobj = obj;
                 newobj.length = parseInt(linput.val());
                 newobj.draw = 1;
                 newobj.start = 0;
                 newobj.order.dir = $(this).val();
-                console.log(newobj);
-                updatedraw(newobj, container)
-
+                updatedraw(newobj, container);
             });
-
-            $(".viewtypeinput").off('change').on('change', function() {
+            vtinput.off('change').on('change', function() {
                 container.find("ul.table").empty();
                 container.find("table").find("tbody").empty();
                 pagin.empty();
@@ -64,24 +58,29 @@ SMTable = jQuery.fn.extend({
                 newobj.draw = 1;
                 newobj.start = 0;
                 newobj.dataview = $(this).val();
-                console.log(newobj);
                 container.empty();
                 createmainui(container, obj);
                 updatedraw(obj, container, updatedrawCallback(container, obj));
-
             });
 
-            $(".searchtable").off("keyup").on("keyup", function(e) {
-                if (e.keyCode == 13) {
-                    container.find("ul.table").empty();
-                    pagin.empty();
-                    var newobj = obj;
-                    newobj.length = parseInt(linput.val());
-                    newobj.draw = 1;
-                    newobj.start = 0;
-                    newobj.search.value = $(this).val();
-                    updatedraw(newobj, container);
+
+
+
+            var to = true;
+            stinput.off("input").on("input", function(e) {  
+                var newobj = obj;
+                newobj.length = parseInt(linput.val());
+                newobj.draw = 1;
+                newobj.start = 0;
+                newobj.search.value = $(this).val();
+                if (to) {
+                    clearTimeout(to);
                 }
+                to = setTimeout(function () {
+                    pagin.empty();
+                    container.find("ul.table").empty();     
+                    updatedraw(newobj, container);
+                }, 1000);
             });
         };
 
