@@ -84,7 +84,7 @@ public function GetBoats() {
         $st->execute();
         $totalData = $st->rowCount();
         $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
-         $len=$requestData['length']=="All"?"":" LIMIT " . $requestData['start'] . " ," . $requestData['length'];
+        $len=$requestData['length']=="All"?"":" LIMIT " . $requestData['start'] . " ," . $requestData['length'];
 
         if (!empty($requestData['search']['value'])) {
             // if there is a search parameter
