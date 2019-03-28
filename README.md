@@ -26,48 +26,47 @@ This is a jquery plugin that renders data in tables or lists....
 
 ```javascript
 
-        $(".smarttable").SmartTable({
-            "dataview": "table",
-            "ajax": {
-                "url": _URL + "/boats/GetBoats",
-                "method": "post"
-            },
-            "lengthinput": ['2', '3', '4', '5', '8'],
-            "length": 5,
-            "order": {
-                "column": "0",
-                "dir": "asc"
-            },
-            "columns": [{
-                "data": "owner_id",
-                "name": "",
-                "searchable": "true",
-                "orderable": "true",
-                "width": "15%"
-            },
-            {
-                "data": "photopath",
-                "name": "",
-                "searchable": "true",
-                "orderable": "false",
-                "width": "15%"
-            },
-            {
-                "data": "boatname",
-                "name": "",
-                "searchable": "true",
-                "orderable": "true",
-                "width": "60%"
-            },
-            {
-                "data": "actions",
-                "name": "",
-                "searchable": "true",
-                "orderable": "false",
-                "width": "10%"
-            }
-        ];
-    });
+$(".smarttable").SmartTable({
+    "dataview": "table",
+    "ajax": {
+        "url": _URL + "/boats/GetBoats",
+        "method": "post"
+    },
+    "lengthinput": ['2', '3', '4', '5', '8'],
+    "length": 5,
+    "order": {
+        "column": "0",
+        "dir": "asc"
+    },
+    "columns": [{
+        "data": "owner_id",
+        "name": "",
+        "searchable": "true",
+        "orderable": "true",
+        "width": "15%"
+    },
+    {
+        "data": "photopath",
+        "name": "",
+        "searchable": "true",
+        "orderable": "false",
+        "width": "15%"
+    },
+    {
+        "data": "boatname",
+        "name": "",
+        "searchable": "true",
+        "orderable": "true",
+        "width": "60%"
+    },
+    {
+        "data": "actions",
+        "name": "",
+        "searchable": "true",
+        "orderable": "false",
+        "width": "10%"
+    }];
+});
 ```
 ### On Server
 ```php
