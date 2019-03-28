@@ -27,7 +27,7 @@ jQuery.fn.extend({
                 newobj.draw = 1;
                 newobj.start = 0;
                 newobj.order.column = colid;
-                newobj.order.dir = $(".ordertypeinput").val();
+                newobj.order.dir = otinput.val();
                 updatedraw(newobj, container);
 
             });
@@ -86,7 +86,7 @@ jQuery.fn.extend({
                 data: obj,
                 success: function(data) {
                     var jsondata = JSON.parse(data);
-                    var total = jsondata.recordsTotal;
+                    var total = jsondata.recordsFiltered;
                     var dataview = obj["dataview"];
                     var length = parseInt($(".lengthinput").val());
                     var pagescount = 0;
