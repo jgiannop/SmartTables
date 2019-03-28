@@ -40,28 +40,28 @@ $(".smarttable").SmartTable({
     },
     "columns": [{
         "data": "owner_id",
-        "name": "",
+        "name": "Owner_Id",
         "searchable": "true",
         "orderable": "true",
         "width": "15%"
     },
     {
         "data": "photopath",
-        "name": "",
+        "name": "PhotoPath",
         "searchable": "true",
         "orderable": "false",
         "width": "15%"
     },
     {
         "data": "boatname",
-        "name": "",
+        "name": "BoatName",
         "searchable": "true",
         "orderable": "true",
         "width": "60%"
     },
     {
         "data": "actions",
-        "name": "",
+        "name": "Actions",
         "searchable": "true",
         "orderable": "false",
         "width": "10%"
