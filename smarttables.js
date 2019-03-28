@@ -14,7 +14,7 @@ SMTable = jQuery.fn.extend({
             var linput = container.find(".headarea > .lengthinputcont > .lengthinput");
             var oinput = container.find(".headarea > .orderinputcont > .orderinput");
             var otinput = container.find(".headarea > .ordertypeinputcont > .ordertypeinput");
-            var vtinput = container.find(".headarea > .viewtypecont > .viewtype");
+            var vtinput = container.find(".headarea > .viewtypecont > .viewtypeinput");
             var stinput = container.find(".headarea > .searchtablecont > .searchtable");
             var pagin = container.find(".pagination");
             
