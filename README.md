@@ -19,6 +19,11 @@ This is a jquery plugin that renders data in tables or lists....
 * order: A json object that indicates the order in respect to column number and the direction of the order.
 * columns: A json array that defines the column objects that beeing rendered.
 
+## Methods
+
+* redraw(): Refresh the table in the current draw.
+* destroy(): Destroys the table.
+
 ## Example
 ### On Client
 ```html
