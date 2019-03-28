@@ -32,47 +32,63 @@ This is a jquery plugin that renders data in tables or lists....
 
 ```javascript
 
-$(".smarttable").SmartTable({
-    "dataview": "table",
-    "ajax": {
-        "url": _URL + "/boats/GetBoats",
-        "method": "post"
-    },
-    "lengthinput": ['2', '3', '4', '5', '8'],
-    "length": 5,
-    "order": {
-        "column": "0",
-        "dir": "asc"
-    },
-    "columns": [{
-        "data": "owner_id",
-        "name": "Owner_Id",
-        "searchable": "true",
-        "orderable": "true",
-        "width": "15%"
-    },
-    {
-        "data": "photopath",
-        "name": "PhotoPath",
-        "searchable": "true",
-        "orderable": "false",
-        "width": "15%"
-    },
-    {
-        "data": "boatname",
-        "name": "BoatName",
-        "searchable": "true",
-        "orderable": "true",
-        "width": "60%"
-    },
-    {
-        "data": "actions",
-        "name": "Actions",
-        "searchable": "true",
-        "orderable": "false",
-        "width": "10%"
-    }];
-});
+var Boats_view = function (viewdata) {
+    this.init = function () {
+        var smtable = $(".smarttable").SmartTable({
+            "dataview": "table",
+            "ajax": {
+                "url": _URL + "/boats/GetAllBoatsSS",
+                "method": "post"
+            },
+            "lengthinput": ['2', '3', '4', '5', '8', '20', 'All'],
+            "length": 5,
+            "actions":{
+                "length":true,
+                "order":true,
+                "view":true,
+                "search":true
+            },
+            "ongridview":{
+                "removeheaders":true
+            },
+            "order": {
+                "column": "0",
+                "dir": "asc"
+            },
+            "columns": [{
+                    "data": "owner_id",
+                    "name": "Owner Id",
+                    "searchable": "true",
+                    "orderable": "true",
+                    "width": "15%",
+                    "hiddenOnGrid": true
+                },
+                {
+                    "data": "photopath",
+                    "name": "Photopath",
+                    "searchable": "true",
+                    "orderable": "false",
+                    "width": "15%"
+                },
+                {
+                    "data": "boatname",
+                    "name": "Boatname",
+                    "searchable": "true",
+                    "orderable": "true",
+                    "width": "60%"
+                },
+                {
+                    "data": "actions",
+                    "name": "Actions",
+                    "searchable": "true",
+                    "orderable": "false",
+                    "width": "10%",
+                    "hiddenOnGrid": true
+                }
+            ]
+        });
+    };
+};
 ```
 ### On Server (with php)
 ```php
