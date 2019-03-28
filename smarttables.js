@@ -212,6 +212,7 @@ SMTable = jQuery.fn.extend({
         }
 
         function createpaginator(draw, pagescount, container) {
+
             if (draw == 1) {
                 container.find(".pagination").append('<li class="page-item prev disabled"><a class="page-link prev" href="#">Previous</a></li>');
             } else {
@@ -232,23 +233,26 @@ SMTable = jQuery.fn.extend({
             }
             $(".page-link").off('click').on('click', function() {
                 var currentdraw = parseInt($(".page-item.active > a").html());
-                container.find("ul.table").empty();
-                container.find(".pagination").empty();
+                var newdraw = parseInt($(this).html());
+                if (currentdraw != newdraw) {
+                    container.find("ul.table").empty();
+                    container.find(".pagination").empty();
 
-                if ($(this).hasClass("prev")) {
-                    var draw = currentdraw - 1;
-                } else if ($(this).hasClass("next")) {
-                    var draw = currentdraw + 1;
-                    console.log(draw);
-                } else {
-                    var draw = $(this).html();
+                    if ($(this).hasClass("prev")) {
+                        var draw = currentdraw - 1;
+                    } else if ($(this).hasClass("next")) {
+                        var draw = currentdraw + 1;
+                        console.log(draw);
+                    } else {
+                        var draw = $(this).html();
+                    }
+                    var start = (draw - 1) * $(".lengthinput").val();
+                    var newobj = obj;
+                    newobj.draw = draw;
+                    newobj.start = start;
+                    newobj.length = $(".lengthinput").val();
+                    updatedraw(newobj, container);
                 }
-                var start = (draw - 1) * $(".lengthinput").val();
-                var newobj = obj;
-                newobj.draw = draw;
-                newobj.start = start;
-                newobj.length = $(".lengthinput").val();
-                updatedraw(newobj, container);
             });
         }
 
