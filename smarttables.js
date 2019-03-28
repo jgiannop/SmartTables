@@ -2,10 +2,10 @@ jQuery.fn.extend({
     SmartTable: function(obj) {
 
         var updatedrawCallback = function(container, obj) {
-            var linput=container.find(".headarea > .lengthinputcont > .lengthinput");
-            var oinput=container.find(".headarea > .orderinputcont > .orderinput");
-            var otinput=container.find(".headarea > .ordertypeinputcont > .ordertypeinput");
-            var pagin=container.find(".pagination");
+            var linput = container.find(".headarea > .lengthinputcont > .lengthinput");
+            var oinput = container.find(".headarea > .orderinputcont > .orderinput");
+            var otinput = container.find(".headarea > .ordertypeinputcont > .ordertypeinput");
+            var pagin = container.find(".pagination");
             linput.off('change').on('change', function() {
                 container.find("ul.table").empty();
                 pagin.empty();
@@ -26,21 +26,21 @@ jQuery.fn.extend({
                 newobj.length = linput.val();
                 newobj.draw = 1;
                 newobj.start = 0;
-                newobj.order[0].column = colid;
-                newobj.order[0].dir = $(".ordertypeinput").val();
+                newobj.order.column = colid;
+                newobj.order.dir = $(".ordertypeinput").val();
                 updatedraw(newobj, container);
 
             });
 
             otinput.off('change').on('change', function() {
                 container.find("ul.table").empty();
-//                container.find("table").find("tbody").empty();
+                //                container.find("table").find("tbody").empty();
                 pagin.empty();
                 var newobj = obj;
                 newobj.length = parseInt(linput.val());
                 newobj.draw = 1;
                 newobj.start = 0;
-                newobj.order[0].dir = $(this).val();
+                newobj.order.dir = $(this).val();
                 console.log(newobj);
                 updatedraw(newobj, container)
 
@@ -106,16 +106,14 @@ jQuery.fn.extend({
                             tbody += "</tr>";
                         });
                         tbody += "</tbody>";
-                      //  container.find("table").find("tbody").empty();
-                      var tbodyexist=container.find("table").find("tbody").length>0;
-                      if(tbodyexist){
-                          container.find("table").find("tbody").replaceWith(tbody);
-                      }
-                      else
-                      {
-                          container.find("table").append(tbody);
-                      }
-                        
+                        //  container.find("table").find("tbody").empty();
+                        var tbodyexist = container.find("table").find("tbody").length > 0;
+                        if (tbodyexist) {
+                            container.find("table").find("tbody").replaceWith(tbody);
+                        } else {
+                            container.find("table").append(tbody);
+                        }
+
                     } else if (dataview == "grid") {
                         var tbody = "";
                         var arraydata = jsondata.data;
@@ -190,7 +188,7 @@ jQuery.fn.extend({
 
         function createthead(container, obj) {
             cols = obj["columns"];
-            ordercol = obj["order"][0]["column"];
+            ordercol = obj["order"]["column"];
             container.find("thead").append("<tr>");
             var thead = "<thead class='thead-light'><tr>";
             $.each(cols, function(k, v) {
@@ -202,21 +200,6 @@ jQuery.fn.extend({
             if (container.find("table").find("thead").length == 0) {
                 container.find("table").append(thead);
             }
-
-            // $(".headerlinks").off("click").on("click", function() {
-            //     var colid = $(this).attr("data");
-            //     container.find("table").find("tbody").empty();
-            //     container.find("ul.table").empty();
-            //     $(".pagination").empty();
-            //     $(".headerlinks").removeClass("ordered");
-            //     $(this).addClass("ordered");
-            //     var draw = parseInt($(".page-item.active > a").html());
-            //     var newobj = obj;
-            //     newobj.order.column = colid;
-            //     console.log(newobj)
-            //     updatedraw(newobj, container)
-            // });
-
         }
 
         function createpaginator(draw, pagescount, container) {
@@ -262,8 +245,8 @@ jQuery.fn.extend({
 
         return this.each(function() {
             var container = $(this);
-            obj.draw=1;
-            obj.start=0;
+            obj.draw = 1;
+            obj.start = 0;
             createmainui(container, obj);
             updatedraw(obj, container, updatedrawCallback(container, obj));
         });
