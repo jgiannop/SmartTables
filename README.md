@@ -63,10 +63,10 @@ This is a jquery plugin that renders data in tables or lists....
             },
             "lengthinput": ['2', '3', '4', '5', '8'],
             "length": 5,
-            "order": [{
+            "order": {
                 "column": "0",
                 "dir": "asc"
-            }],
+            },
             "columns": cols,
             "search": {
                 "value": "",
