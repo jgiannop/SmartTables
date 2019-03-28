@@ -120,7 +120,7 @@ jQuery.fn.extend({
                         $.each(arraydata, function(k, v) {
                             tbody += "<li>";
                             $.each(cols, function(k1, v1) {
-                                tbody += "<div>" + v1.data + ": " + v[v1.data] + "</div>";
+                                tbody += "<div>" + v1.name + ": " + v[v1.data] + "</div>";
                             });
                             tbody += "</li>";
                         });
@@ -193,7 +193,7 @@ jQuery.fn.extend({
             var thead = "<thead class='thead-light'><tr>";
             $.each(cols, function(k, v) {
                 thead += "<th style='width:" + v.width + "'>";
-                thead += "<a  data='" + k + "' class='headerlinks'>" + v.data + '</a>';
+                thead += "<a  data='" + k + "' class='headerlinks'>" + v.name + '</a>';
                 thead += "</th>";
             });
             thead += "</tr></thead>";
