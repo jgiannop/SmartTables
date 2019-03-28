@@ -25,6 +25,7 @@ SMTable = jQuery.fn.extend({
                 newobj.draw = 1;
                 newobj.start = 0;
                 updatedraw(newobj, container);
+                return false;
             });
             oinput.off('change').on('change', function() {
                 var colid = $(this).val();
@@ -36,6 +37,7 @@ SMTable = jQuery.fn.extend({
                 newobj.order.column = colid;
                 newobj.order.dir = otinput.val();
                 updatedraw(newobj, container);
+                return false;
             });
             otinput.off('change').on('change', function() {
                 pagin.empty();
@@ -45,6 +47,7 @@ SMTable = jQuery.fn.extend({
                 newobj.start = 0;
                 newobj.order.dir = $(this).val();
                 updatedraw(newobj, container);
+                return false;
             });
             vtinput.off('change').on('change', function() {
                 container.find("table").find("tbody").empty();
@@ -57,6 +60,7 @@ SMTable = jQuery.fn.extend({
                 container.empty();
                 createmainui(container, obj);
                 updatedraw(obj, container, updatedrawCallback(container, obj));
+                return false;
             });
             var to = true;
             stinput.off("input").on("input", function(e) {  
@@ -72,6 +76,7 @@ SMTable = jQuery.fn.extend({
                     pagin.empty();
                     updatedraw(newobj, container);
                 }, 1000);
+                return false;
             });
         };
 
@@ -257,6 +262,7 @@ SMTable = jQuery.fn.extend({
                     newobj.start = start;
                     newobj.length = container.find(".headarea > .lengthinputcont > .lengthinput").val();
                     updatedraw(newobj, container);
+                    return false;
                 }
             });
         }
