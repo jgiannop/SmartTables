@@ -5,8 +5,8 @@ This is a jquery plugin that renders data in tables or lists....
 # Usage
 ## via cdn
 ```html
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/jgiannop/smarttables/smarttables.css">
-<script src="https://cdn.jsdelivr.net/gh/jgiannop/public/js/smarttables.js" type="text/javascript"></script>  
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/jgiannop/smarttables/dist/smarttables.min.css">
+<script src="https://cdn.jsdelivr.net/gh/jgiannop/smarttables/dist/smarttables.min.js" type="text/javascript"></script>  
 
 ```
 
