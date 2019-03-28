@@ -1,6 +1,15 @@
 jQuery.fn.extend({
     SmartTable: function(obj) {
 
+        $.extend(SMTable, {
+            redraw: function() {
+                updatedraw(obj, $(this))
+            },
+            destroy: function() {
+                $(this).empty();
+            }
+        });
+
         var updatedrawCallback = function(container, obj) {
             var linput = container.find(".headarea > .lengthinputcont > .lengthinput");
             var oinput = container.find(".headarea > .orderinputcont > .orderinput");
