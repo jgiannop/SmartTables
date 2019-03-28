@@ -95,13 +95,13 @@ public function GetBoats() {
             $sql = "SELECT  * FROM boats";
             $sql.=" where (boatname LIKE '%" . $requestData['search']['value'] . "%' ";    // $requestData['search']['value'] contains search parameter
             $sql.=" OR owner_id LIKE '%" . $requestData['search']['value'] . "%') ";
-            $sql.=" ORDER BY " . $columns[$requestData['order'][0]['column']] . "   " . $requestData['order'][0]['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
+            $sql.=" ORDER BY " . $columns[$requestData['order']['column']] . "   " . $requestData['order']['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
             $st = $this->db->prepare($sql);
             $st->execute();
             $totalFiltered = $st->rowCount();
         } else {
             $sql = "SELECT  * FROM boats";
-            $sql.=" ORDER BY " . $columns[$requestData['order'][0]['column']] . "   " . $requestData['order'][0]['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
+            $sql.=" ORDER BY " . $columns[$requestData['order']['column']] . "   " . $requestData['order']['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
             $st = $this->db->prepare($sql);
             $st->execute();
         }
