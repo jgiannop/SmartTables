@@ -84,10 +84,13 @@ SMTable = jQuery.fn.extend({
             var cols = obj["columns"];
             var url = obj["ajax"]["url"];
             var method = obj["ajax"]["method"];
+            var dataobj=Object.assign({}, obj);;
+            dataobj.onInitComplete=null;
+            dataobj.onDrawUpdated=null;
             $.ajax({
                 url: url,
                 method: method,
-                data: obj,
+                data: dataobj,
                 success: function(data) {
                     var jsondata = JSON.parse(data);
                     var total = jsondata.recordsFiltered;
@@ -150,7 +153,9 @@ SMTable = jQuery.fn.extend({
                             container.find("ul.table").append(tbody);
                         }
                     }
+                   
                     createpaginator(obj["draw"], pagescount, container);
+                    obj.onDrawUpdated();
                     callback;
                 }
             });
@@ -274,7 +279,7 @@ SMTable = jQuery.fn.extend({
             obj.search.value = "";
             obj.search.regex = "false";
             createmainui(container, obj);
-            updatedraw(obj, container, updatedrawCallback(container, obj));
+            updatedraw(obj, container,updatedrawCallback(container, obj));
         });
     }
 });
