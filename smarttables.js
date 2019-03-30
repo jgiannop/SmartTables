@@ -78,6 +78,10 @@ SMTable = jQuery.fn.extend({
                 }, 1000);
                 return false;
             });
+            if(obj.onInitComplete!=null)
+            {
+               obj.onInitComplete(); 
+            }
         };
 
         function updatedraw(obj, container, callback) {
@@ -155,7 +159,10 @@ SMTable = jQuery.fn.extend({
                     }
                    
                     createpaginator(obj["draw"], pagescount, container);
-                    obj.onDrawUpdated();
+                    if(obj.onDrawUpdated!=null)
+                    {
+                       obj.onDrawUpdated(); 
+                    }
                     callback;
                 }
             });
