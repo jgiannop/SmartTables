@@ -57,6 +57,12 @@ var smtable = $(".smarttable").SmartTable({
         "column": "0",
         "dir": "asc"
     },
+    "onInitComplete": function(){
+       console.log("Init Complete");
+    },
+    "onDrawUpdated": function(){
+       console.log("Draw updated");
+    },
     "columns": [{
             "data": "owner_id",
             "name": "Owner Id",
