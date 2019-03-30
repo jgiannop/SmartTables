@@ -24,6 +24,11 @@ This is a jquery plugin that renders data in tables or lists....
 * redraw(): Refresh the table in the current draw.
 * destroy(): Destroys the table.
 
+## Events
+
+* onInitComplete(): Fires on tables initialization.
+* onDrawUpdated(): Fires when the draw updated.
+
 ## Example
 ### On Client
 ```html
