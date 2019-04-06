@@ -75,7 +75,7 @@ SMTable = jQuery.fn.extend({
                 to = setTimeout(function () {
                     pagin.empty();
                     updatedraw(newobj, container);
-                }, 1000);
+                }, 500);
                 return false;
             });
             if(obj.onInitComplete!=null)
@@ -85,10 +85,11 @@ SMTable = jQuery.fn.extend({
         };
 
         function updatedraw(obj, container, callback) {
+            container.find(".tablefooterarea > .statuslbl").css("visibility","visible");
             var cols = obj["columns"];
             var url = obj["ajax"]["url"];
             var method = obj["ajax"]["method"];
-            var dataobj=Object.assign({}, obj);;
+            var dataobj=Object.assign({}, obj);
             dataobj.onInitComplete=null;
             dataobj.onDrawUpdated=null;
             $.ajax({
@@ -98,6 +99,7 @@ SMTable = jQuery.fn.extend({
                 success: function(data) {
                     var jsondata = JSON.parse(data);
                     var total = jsondata.recordsFiltered;
+                    var totalDraw = jsondata.recordsDraw;
                     var dataview = obj["dataview"];
                     var length = parseInt(container.find(".headarea > .lengthinputcont > .lengthinput").val());
                     var pagescount = 0;
@@ -107,7 +109,7 @@ SMTable = jQuery.fn.extend({
                         pagescount = parseInt(total / length) + 1;
                     }
                     if (dataview == "table") {
-                        var tbody = "<tbody>";
+                        var tbody = "<tbody >";
                         var arraydata = jsondata.data;
                         $.each(arraydata, function(k, v) {
                             tbody += "<tr>";
@@ -122,9 +124,20 @@ SMTable = jQuery.fn.extend({
                         tbody += "</tbody>";
                         var tbodyexist = container.find("table").find("tbody").length > 0;
                         if (tbodyexist) {
-                            container.find("table").find("tbody").replaceWith(tbody);
+                            container.find("table").find("tbody").fadeOut("fast",function(){
+                                container.find("table").find("tbody").replaceWith(tbody);
+                                container.find("table").find("tbody").hide();
+                                container.find("table").find("tbody").fadeIn("fast",function(){
+                                    container.find(".tablefooterarea > .statuslbl").css("visibility","hidden");
+                                });
+                            });
+                           
                         } else {
                             container.find("table").append(tbody);
+                            container.find("table").find("tbody").hide();
+                            container.find("table").find("tbody").fadeIn("fast",function(){
+                                container.find(".tablefooterarea > .statuslbl").css("visibility","hidden");
+                            });
                         }
 
                     } else if (dataview == "grid") {
@@ -147,18 +160,30 @@ SMTable = jQuery.fn.extend({
                             });
                             tbody += "</li>";
                         });
-                        //container.find("ul.table").append(tbody);
                         var tbodyexist =container.find(".gridcontainer").find("ul.table").children().length > 0;
                         if (tbodyexist) {
                             var clsname = container.attr("class") + "_smtable";
                             var txt = '<div class="gridcontainer"><ul class="table '+clsname+'" type="text">'+tbody+'</ul></div>';
-                            container.find(".gridcontainer").replaceWith(txt);
+                            container.find(".gridcontainer").fadeOut("fast",function(){
+                                container.find(".gridcontainer").replaceWith(txt);
+                                container.find(".gridcontainer").hide();
+                                container.find(".gridcontainer").fadeIn("fast",function(){
+                                    container.find(".tablefooterarea > .statuslbl").css("visibility","hidden");
+                                });
+                            });
+                            
+                            
                         } else {
                             container.find("ul.table").append(tbody);
+                            container.find(".gridcontainer").hide();
+                            container.find(".gridcontainer").fadeIn("fast",function(){
+                                container.find(".tablefooterarea > .statuslbl").css("visibility","hidden");
+                            });
                         }
                     }
                    
                     createpaginator(obj["draw"], pagescount, container);
+                    container.find(".tablefooterarea > .resultslbl").html("Shows: "+(obj["start"]+1)+" to "+(obj["start"]+totalDraw)+". Total: "+total);
                     if(obj.onDrawUpdated!=null)
                     {
                        obj.onDrawUpdated(); 
@@ -214,7 +239,7 @@ SMTable = jQuery.fn.extend({
                 txt += '<div class="gridcontainer"><ul class="table ' + clsname + '" type="text"></ul></div>';
 
             }
-            txt += '<div class="tablefooterarea"><nav aria-label="Page navigation example"><ul class="pagination"></ul></nav></div>';
+            txt += '<div class="tablefooterarea"><div class="resultslbl">Total:</div><div class="statuslbl"><div class="smtableloader"></div>Loading...</div><nav><ul class="pagination"></ul></nav></div>';
             container.append(txt);
             container.find(".headarea > .lengthinputcont > .lengthinput").val(length);
             $(".viewtypeinput").val(obj["dataview"]);
@@ -256,7 +281,7 @@ SMTable = jQuery.fn.extend({
                 container.find(".pagination").append('<li class="page-item next"><a class="page-link next" href="#">Next</a></li>');
             }
             container.find(".pagination").find(".page-item").find(".page-link").off('click').on('click', function() {
-                var currentdraw = parseInt( container.find(".pagination").find(".page-item").find(".page-item.active > a").html());
+                var currentdraw = parseInt(container.find(".tablefooterarea > nav > ul.pagination > .page-item.active > a").html());
                 var newdraw = parseInt($(this).html());
                 if (currentdraw != newdraw) {
                     container.find(".pagination").empty();
