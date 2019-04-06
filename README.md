@@ -36,22 +36,22 @@ This is a jquery plugin that renders data in tables or lists....
 ```
 
 ```javascript
-var smtable = $(".smarttable").SmartTable({
+var smtable = $(".smtable").SmartTable({
     "dataview": "table",
     "ajax": {
-        "url": _URL + "/boats/GetBoats",
+        "url": _URL + "/boats/GetAllBoats",
         "method": "post"
     },
     "lengthinput": ['2', '3', '4', '5', '8', '20', 'All'],
     "length": 5,
-    "actions": {
-        "length": true,
-        "order": true,
-        "view": true,
-        "search": true
+    "actions":{
+        "length":true,
+        "order":true,
+        "view":true,
+        "search":true
     },
-    "ongridview": {
-        "removeheaders": true
+    "ongridview":{
+        "removeheaders":true
     },
     "order": {
         "column": "0",
@@ -64,21 +64,24 @@ var smtable = $(".smarttable").SmartTable({
        console.log("Draw updated");
     },
     "columns": [{
+            "field": "owner_id",
             "data": "owner_id",
             "name": "Owner Id",
             "searchable": "true",
             "orderable": "true",
             "width": "15%",
-            "hiddenOnGrid": true
+            "hiddenOnGrid": false
         },
         {
+            "field": "photopath",
             "data": "photopath",
             "name": "Photopath",
             "searchable": "true",
-            "orderable": "false",
+            "orderable": "true",
             "width": "15%"
         },
         {
+            "field": "boatname",
             "data": "boatname",
             "name": "Boatname",
             "searchable": "true",
@@ -94,7 +97,7 @@ var smtable = $(".smarttable").SmartTable({
             "hiddenOnGrid": true
         }
     ]
-});
+});       
 ```
 ### On Server (with php)
 ```php
