@@ -39,7 +39,7 @@ This is a jquery plugin that renders data in tables or lists....
 var smtable = $(".smtable").SmartTable({
     "dataview": "table",
     "ajax": {
-        "url": _URL + "/boats/GetAllBoats",
+        "url": _URL + "/boats/GetBoats",
         "method": "post"
     },
     "lengthinput": ['2', '3', '4', '5', '8', '20', 'All'],
