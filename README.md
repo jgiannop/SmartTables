@@ -99,11 +99,17 @@ var smtable = $(".smtable").SmartTable({
     ]
 });       
 ```
-### On Server (with php)
+### On Server (with php and PDO)
+Supposed that $this->db is a PDO instance
 ```php
- public function GetBoats($table,$requestData) {
-    require 'SmartTables.php';
-
+$db=new PDO('mysql:host='.$dbhost.';dbname='.$dbname,$dbuser,$dbpass);
+```
+and that you have include somewhere SmartTables.php
+```php
+require 'SmartTables.php';
+```
+```php
+public function GetBoats($table,$requestData) {
     $jdata=SmartTables::Instance($this->db,$table, $requestData)->GetTable();
     foreach ($jdata["data"] as $row){
         $nestedData = array();
