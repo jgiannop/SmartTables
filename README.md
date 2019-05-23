@@ -32,7 +32,7 @@ This is a jquery plugin that renders data in tables or lists....
 ## Example
 ### On Client
 ```html
-<div class="smarttable"></div>  
+<div class="smtable"></div>  
 ```
 
 ```javascript
