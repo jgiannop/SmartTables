@@ -92,12 +92,14 @@ SMTable = jQuery.fn.extend({
             var dataobj=Object.assign({}, obj);
             dataobj.onInitComplete=null;
             dataobj.onDrawUpdated=null;
+            App.show_elementloader("", container.find(".smarttable_smtable"));
             $.ajax({
                 url: url,
                 method: method,
                 data: dataobj,
                 success: function(data) {
                     var jsondata = JSON.parse(data);
+                    App.hide_elementloader(container.find(".smarttable_smtable"));
                     var total = jsondata.recordsFiltered;
                     var totalDraw = jsondata.recordsDraw;
                     var dataview = obj["dataview"];
@@ -144,7 +146,7 @@ SMTable = jQuery.fn.extend({
                         var tbody = "";
                         var arraydata = jsondata.data;
                         $.each(arraydata, function(k, v) {
-                            tbody += "<li>";
+                            tbody += "<li data-prodid='"+v.id+"'>";
                             $.each(cols, function(k1, v1) {
                                 if(!v1.hiddenOnGrid)
                                 {
@@ -181,12 +183,15 @@ SMTable = jQuery.fn.extend({
                             });
                         }
                     }
-                   
+                    container.find(".pagination").empty();
                     createpaginator(obj["draw"], pagescount, container);
                     container.find(".tablefooterarea > .resultslbl").html("Shows: "+(obj["start"]+1)+" to "+(obj["start"]+totalDraw)+". Total: "+total);
                     if(obj.onDrawUpdated!=null)
                     {
-                       obj.onDrawUpdated(); 
+                        
+
+                        setTimeout(function(){ obj.onDrawUpdated(); },1000);
+
                     }
                     callback;
                 }
@@ -263,28 +268,47 @@ SMTable = jQuery.fn.extend({
             }
         }
         function createpaginator(draw, pagescount, container) {
+            totalviewpages=3;
             if (draw == 1) {
                 container.find(".pagination").append('<li class="page-item prev disabled"><a class="page-link prev" href="#">Previous</a></li>');
             } else {
                 container.find(".pagination").append('<li class="page-item prev"><a class="page-link prev" href="#">Previous</a></li>');
             }
             for (i = 0; i < pagescount; i++) {
-                if (i + 1 == draw) {
-                    container.find(".pagination").append('<li class="page-item active"><a class="page-link" href="#">' + (i + 1) + '</a></li>');
-                } else {
-                    container.find(".pagination").append('<li class="page-item"><a class="page-link" href="#">' + (i + 1) + '</a></li>');
+                if(i==0){
+                    container.find(".pagination").append('<li data-page="'+(pagescount-1)+'" class="page-item more"><a class="page-link" href="#">...</a></li>');
                 }
+                if (i + 1 == draw) {
+                    container.find(".pagination").append('<li data-page="'+i+'" class="page-item active"><a class="page-link" href="#">' + (i + 1) + '</a></li>');
+
+                } else {
+                    container.find(".pagination").append('<li data-page="'+i+'" class="page-item"><a class="page-link" href="#">' + (i + 1) + '</a></li>');
+                }
+                if(i==pagescount-3){
+                    container.find(".pagination").append('<li data-page="'+(pagescount-1)+'" class="page-item more"><a class="page-link" href="#">...</a></li>');
+                }
+               
             }
             if (draw == pagescount) {
                 container.find(".pagination").append('<li class="page-item next disabled"><a class="page-link next" href="#">Next</a></li>');
             } else {
                 container.find(".pagination").append('<li class="page-item next"><a class="page-link next" href="#">Next</a></li>');
             }
+            pageitems=container.find(".pagination > .page-item");
+            $.each(pageitems,function(k,v){
+                if((k>draw+totalviewpages || k<Math.abs(totalviewpages-draw-3)) && !$(v).hasClass("prev") && !$(v).hasClass("next") && !$(v).hasClass("more") && k != pagescount && k != pagescount+1){
+                    $(v).css("display","none");
+                }
+            });
+            // if(pagescount>totalviewpages){
+
+            //     container.find(".pagination > .page-item[data-page='"+"']").css("display","none");
+            // }
             container.find(".pagination").find(".page-item").find(".page-link").off('click').on('click', function() {
                 var currentdraw = parseInt(container.find(".tablefooterarea > nav > ul.pagination > .page-item.active > a").html());
                 var newdraw = parseInt($(this).html());
                 if (currentdraw != newdraw) {
-                    container.find(".pagination").empty();
+                   
                     if ($(this).hasClass("prev")) {
                         var draw = currentdraw - 1;
                     } else if ($(this).hasClass("next")) {
@@ -295,9 +319,9 @@ SMTable = jQuery.fn.extend({
                     }
                     var start = (draw - 1) * container.find(".headarea > .lengthinputcont > .lengthinput").val();
                     var newobj = obj;
-                    newobj.draw = draw;
-                    newobj.start = start;
-                    newobj.length = container.find(".headarea > .lengthinputcont > .lengthinput").val();
+                    newobj.draw = parseInt(draw);
+                    newobj.start = parseInt(start);
+                    newobj.length = parseInt(container.find(".headarea > .lengthinputcont > .lengthinput").val());
                     updatedraw(newobj, container);
                     return false;
                 }
